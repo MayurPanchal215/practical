@@ -25,7 +25,7 @@ class EventController extends Controller
     {
     	$startDate = $request->start_date;
     	$endDate   = $request->end_date;
-    	$getData   = Event::getEventData($startDate, $endDate);
+    	$getData   = Event::fetchData($endDate);
 		return Response::json(['status' => true, 'tableData' => $getData]);
     }
 
@@ -38,6 +38,7 @@ class EventController extends Controller
         $startDate = $request->start_date;
         $endDate   = $request->end_date;
         $eventIds  = Event::getEventData($startDate, $endDate);
-        EventNotification::dispatch($eventIds)->onQueue('EventNotification');
+        EventNotification::dispatch($eventIds);
+        return Response::json(['status' => true, 'msg' => "success"]);
     }
 }

@@ -27,6 +27,17 @@ class Event extends Model
      * @param $startDate
      * @param $endDate
      */
+    static function fetchData($endDate)
+    {
+        $endDate   = Carbon::createFromFormat('d/m/Y',$endDate)->format('Y-m-d');
+        return Event::whereDate('start_date', '<=', $endDate)->get();
+    }
+
+    /**
+     * This function is used to get events data.
+     * @param $startDate
+     * @param $endDate
+     */
     static function getEventData($startDate, $endDate)
     {
     	$startDate = Carbon::createFromFormat('d/m/Y',$startDate)->format('Y-m-d');
